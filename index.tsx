@@ -31,9 +31,9 @@ interface Props {
   components?: { list?: any; new?: any; show?: any; edit?: any };
   schemaDefinition: {
     list: DisplaySchema<any>;
-    new: SchemaDefinition<any>;
+    new?: SchemaDefinition<any>;
     show: DisplaySchema<any>;
-    edit: SchemaDefinition<any>;
+    edit?: SchemaDefinition<any>;
   };
 }
 
@@ -68,26 +68,28 @@ const Index: React.FC<Props> = ({
         }}
       />
 
-      <Route
-        path={`${match.url}/new`}
-        render={props => {
-          return components.new ? (
-            React.createElement(components.new, {
-              dispatcher,
-              name,
-              schemaDefinition: schemaDefinition.new,
-              ...props
-            })
-          ) : (
-            <Create
-              dispatcher={dispatcher}
-              name={name}
-              schemaDefinition={schemaDefinition.new}
-              {...props}
-            />
-          );
-        }}
-      />
+      {dispatcher.new && (
+        <Route
+          path={`${match.url}/new`}
+          render={props => {
+            return components.new ? (
+              React.createElement(components.new, {
+                dispatcher,
+                name,
+                schemaDefinition: schemaDefinition.new,
+                ...props
+              })
+            ) : (
+              <Create
+                dispatcher={dispatcher}
+                name={name}
+                schemaDefinition={schemaDefinition.new}
+                {...props}
+              />
+            );
+          }}
+        />
+      )}
 
       <Route
         path={`${match.url}/:id/show`}
@@ -110,26 +112,28 @@ const Index: React.FC<Props> = ({
         }}
       />
 
-      <Route
-        path={`${match.url}/:id/edit`}
-        render={props => {
-          return components.edit ? (
-            React.createElement(components.edit, {
-              dispatcher,
-              name,
-              schemaDefinition: schemaDefinition.edit,
-              ...props
-            })
-          ) : (
-            <Update
-              dispatcher={dispatcher}
-              name={name}
-              schemaDefinition={schemaDefinition.edit}
-              {...props}
-            />
-          );
-        }}
-      />
+      {dispatcher.edit && (
+        <Route
+          path={`${match.url}/:id/edit`}
+          render={props => {
+            return components.edit ? (
+              React.createElement(components.edit, {
+                dispatcher,
+                name,
+                schemaDefinition: schemaDefinition.edit,
+                ...props
+              })
+            ) : (
+              <Update
+                dispatcher={dispatcher}
+                name={name}
+                schemaDefinition={schemaDefinition.edit}
+                {...props}
+              />
+            );
+          }}
+        />
+      )}
     </div>
   );
 };
