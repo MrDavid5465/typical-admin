@@ -4,8 +4,9 @@ import { Name } from "./";
 interface Props {
   match: any;
   name: Name;
+  dispatcher: any;
 }
-const Links: React.FC<Props> = ({ match, name }) => {
+const Links: React.FC<Props> = ({ match, name, dispatcher }) => {
   const urls = {
     edit: new RegExp(`/edit$`),
     new: new RegExp(`/new$`),
@@ -16,7 +17,11 @@ const Links: React.FC<Props> = ({ match, name }) => {
   if (urls.show.test(match.url)) {
     return (
       <>
-        <Link to={`${match.url.replace("show", "edit")}`}>Edit</Link> |{" "}
+        {dispatcher.edit && (
+          <>
+            <Link to={`${match.url.replace("show", "edit")}`}>Edit</Link> |{" "}
+          </>
+        )}
         <Link to={`${match.url.replace(`/${match.params.id}/show`, "")}`}>
           Back
         </Link>
@@ -29,7 +34,11 @@ const Links: React.FC<Props> = ({ match, name }) => {
   } else if (urls.root.test(match.url)) {
     return (
       <>
-        <Link to={`${match.url}/new`}>New</Link> |{" "}
+        {dispatcher.new && (
+          <>
+            <Link to={`${match.url}/new`}>New</Link> |{" "}
+          </>
+        )}
         <Link to={`${match.url.replace(match.url, "")}`}>Back</Link>
       </>
     );
