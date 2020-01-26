@@ -25,10 +25,10 @@ export type DisplaySchema<T> = {
 };
 
 interface Props {
-  dispatcher: { list: any; new: any; show: any; edit: any; delete: any };
+  dispatcher: { list: any; new?: any; show: any; edit?: any; delete?: any };
   match: any;
   name: any;
-  components?: { list: any; new: any; show: any; edit: any };
+  components?: { list?: any; new?: any; show?: any; edit?: any };
   schemaDefinition: {
     list: DisplaySchema<any>;
     new: SchemaDefinition<any>;
