@@ -68,7 +68,7 @@ const Index: React.FC<Props> = ({
         }}
       />
 
-      {dispatcher.new && (
+      {dispatcher.new && schemaDefinition.new && (
         <Route
           path={`${match.url}/new`}
           render={props => {
@@ -112,7 +112,7 @@ const Index: React.FC<Props> = ({
         }}
       />
 
-      {dispatcher.edit && (
+      {dispatcher.edit && schemaDefinition.edit && (
         <Route
           path={`${match.url}/:id/edit`}
           render={props => {
