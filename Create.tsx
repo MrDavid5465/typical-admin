@@ -11,7 +11,7 @@ interface Props {
   match: any;
   history: any;
   name: Name;
-  schemaDefinition: SchemaDefinition<any>;
+  schemaDefinition?: SchemaDefinition<any>;
 }
 
 const New: React.FC<Props> = ({

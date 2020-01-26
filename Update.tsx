@@ -8,7 +8,7 @@ interface Props {
   history: any;
   match: any;
   name: Name;
-  schemaDefinition: any;
+  schemaDefinition?: any;
 }
 
 const Update: React.FC<Props> = ({
