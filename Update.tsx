@@ -26,10 +26,10 @@ const Update: React.FC<Props> = ({
   });
   const initialValues = !loading && !error && data[queryName];
 
-  const [updateItem] = useMutation(dispatcher.update, {
+  const [updateItem] = useMutation(dispatcher.edit, {
     onCompleted: data => history.push(match.url.replace("edit", "show")),
     refetchQueries: [
-      { query: dispatcher.get, variables: { id } },
+      { query: dispatcher.show, variables: { id } },
       { query: dispatcher.list }
     ]
   });
@@ -69,7 +69,7 @@ const Update: React.FC<Props> = ({
         Submit
       </button>
       <hr />
-      <Links match={match} name={name} />
+      <Links match={match} name={name} dispatcher={dispatcher} />
     </div>
   );
 };

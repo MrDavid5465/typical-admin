@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Delete: React.FC<Props> = ({ dispatcher, match, history, id, name }) => {
-  const [removeItem] = useMutation(dispatcher.remove, {
+  const [removeItem] = useMutation(dispatcher.delete, {
     onCompleted: () => history.push(match.url.replace(`/${id}/show`, "")),
     refetchQueries: [{ query: dispatcher.list }]
   });

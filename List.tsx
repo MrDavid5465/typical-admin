@@ -67,7 +67,7 @@ const List: React.FC<Props> = ({
         </tbody>
       </table>
       <hr />
-      <Links match={match} name={name} />
+      <Links match={match} name={name} dispatcher={dispatcher} />
     </div>
   );
 };

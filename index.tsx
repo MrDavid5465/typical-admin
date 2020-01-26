@@ -25,15 +25,15 @@ export type DisplaySchema<T> = {
 };
 
 interface Props {
-  dispatcher: { list: any; create: any; get: any; update: any; remove: any };
+  dispatcher: { list: any; new: any; show: any; edit: any; delete: any };
   match: any;
   name: any;
-  components?: { list: any; create: any; review: any; update: any };
+  components?: { list: any; new: any; show: any; edit: any };
   schemaDefinition: {
     list: DisplaySchema<any>;
-    create: SchemaDefinition<any>;
-    review: DisplaySchema<any>;
-    update: SchemaDefinition<any>;
+    new: SchemaDefinition<any>;
+    show: DisplaySchema<any>;
+    edit: SchemaDefinition<any>;
   };
 }
 
@@ -71,18 +71,18 @@ const Index: React.FC<Props> = ({
       <Route
         path={`${match.url}/new`}
         render={props => {
-          return components.create ? (
-            React.createElement(components.create, {
+          return components.new ? (
+            React.createElement(components.new, {
               dispatcher,
               name,
-              schemaDefinition: schemaDefinition.create,
+              schemaDefinition: schemaDefinition.new,
               ...props
             })
           ) : (
             <Create
               dispatcher={dispatcher}
               name={name}
-              schemaDefinition={schemaDefinition.create}
+              schemaDefinition={schemaDefinition.new}
               {...props}
             />
           );
@@ -92,18 +92,18 @@ const Index: React.FC<Props> = ({
       <Route
         path={`${match.url}/:id/show`}
         render={props => {
-          return components.review ? (
-            React.createElement(components.review, {
+          return components.show ? (
+            React.createElement(components.show, {
               dispatcher,
               name,
-              schemaDefinition: schemaDefinition.review,
+              schemaDefinition: schemaDefinition.show,
               ...props
             })
           ) : (
             <Show
               dispatcher={dispatcher}
               name={name}
-              schemaDefinition={schemaDefinition.review}
+              schemaDefinition={schemaDefinition.show}
               {...props}
             />
           );
@@ -113,18 +113,18 @@ const Index: React.FC<Props> = ({
       <Route
         path={`${match.url}/:id/edit`}
         render={props => {
-          return components.update ? (
-            React.createElement(components.update, {
+          return components.edit ? (
+            React.createElement(components.edit, {
               dispatcher,
               name,
-              schemaDefinition: schemaDefinition.update,
+              schemaDefinition: schemaDefinition.edit,
               ...props
             })
           ) : (
             <Update
               dispatcher={dispatcher}
               name={name}
-              schemaDefinition={schemaDefinition.update}
+              schemaDefinition={schemaDefinition.edit}
               {...props}
             />
           );

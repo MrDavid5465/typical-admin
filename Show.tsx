@@ -20,7 +20,7 @@ const Show: React.FC<Props> = ({
 }) => {
   const id = match.params.id;
   const queryName = `get${name.singular}`;
-  const { data, error, loading } = useQuery(dispatcher.get, {
+  const { data, error, loading } = useQuery(dispatcher.show, {
     variables: { id }
   });
 
@@ -49,15 +49,17 @@ const Show: React.FC<Props> = ({
           </p>
         );
       })}
-      <Delete
-        history={history}
-        id={id}
-        name={name}
-        match={match}
-        dispatcher={dispatcher}
-      />
+      {dispatcher.delete && (
+        <Delete
+          history={history}
+          id={id}
+          name={name}
+          match={match}
+          dispatcher={dispatcher}
+        />
+      )}
       <hr />
-      <Links match={match} name={name} />
+      <Links match={match} name={name} dispatcher={dispatcher} />
     </div>
   );
 };

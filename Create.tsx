@@ -23,7 +23,7 @@ const New: React.FC<Props> = ({
 }) => {
   const newRef: React.RefObject<any> = createRef();
   const [isValid, setIsValid] = useState(false);
-  const [createItem] = useMutation(dispatcher.create, {
+  const [createItem] = useMutation(dispatcher.new, {
     onCompleted: data =>
       history.push(
         match.url.replace("new", `${data[`add${name.singular}`].id}/show`)
@@ -57,7 +57,7 @@ const New: React.FC<Props> = ({
         Submit
       </button>
       <hr />
-      <Links match={match} name={name} />
+      <Links match={match} name={name} dispatcher={dispatcher} />
     </div>
   );
 };
