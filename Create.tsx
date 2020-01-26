@@ -49,7 +49,7 @@ const New: React.FC<Props> = ({
       <Form
         ref={newRef}
         name={"create"}
-        form={schemaDefinition}
+        form={schemaDefinition || {}}
         onChange={handleChange}
       />
       <button onClick={handleReset}>Reset</button>

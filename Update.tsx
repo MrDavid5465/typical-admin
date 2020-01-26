@@ -60,7 +60,7 @@ const Update: React.FC<Props> = ({
       <Form
         ref={editRef}
         name={"update"}
-        form={schemaDefinition}
+        form={schemaDefinition || {}}
         initialValues={initialValues}
         onChange={handleChange}
       />
