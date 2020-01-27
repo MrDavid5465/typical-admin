@@ -9,6 +9,7 @@ interface Props {
   history: any;
   name: Name;
   schemaDefinition: any;
+  callBacks?: any;
 }
 
 const List: React.FC<Props> = ({
