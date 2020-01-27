@@ -9,6 +9,7 @@ interface Props {
   match: any;
   name: Name;
   schemaDefinition?: any;
+  callBacks?: any;
 }
 
 const Update: React.FC<Props> = ({
@@ -16,7 +17,8 @@ const Update: React.FC<Props> = ({
   history,
   match,
   name,
-  schemaDefinition
+  schemaDefinition,
+  callBacks
 }) => {
   const id = match.params.id;
   const queryName = `get${name.singular}`;
@@ -27,7 +29,10 @@ const Update: React.FC<Props> = ({
   const initialValues = !loading && !error && data[queryName];
 
   const [updateItem] = useMutation(dispatcher.edit, {
-    onCompleted: data => history.push(match.url.replace("edit", "show")),
+    onCompleted: data => {
+      history.push(match.url.replace("edit", "show"));
+      callBacks.edit && callBacks.edit(data[queryName]);
+    },
     refetchQueries: [
       { query: dispatcher.show, variables: { id } },
       { query: dispatcher.list }

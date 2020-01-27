@@ -12,6 +12,7 @@ interface Props {
   history: any;
   name: Name;
   schemaDefinition?: SchemaDefinition<any>;
+  callBacks?: any;
 }
 
 const New: React.FC<Props> = ({
@@ -19,15 +20,18 @@ const New: React.FC<Props> = ({
   match,
   history,
   name,
-  schemaDefinition
+  schemaDefinition,
+  callBacks
 }) => {
   const newRef: React.RefObject<any> = createRef();
   const [isValid, setIsValid] = useState(false);
   const [createItem] = useMutation(dispatcher.new, {
-    onCompleted: data =>
+    onCompleted: data => {
       history.push(
         match.url.replace("new", `${data[`add${name.singular}`].id}/show`)
-      ),
+      );
+      callBacks.new && callBacks.new([`add${name.singular}`]);
+    },
     refetchQueries: [{ query: dispatcher.list }]
   });
 

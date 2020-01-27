@@ -18,7 +18,7 @@ export interface Row {
 export interface DisplayField {
   label: string;
   onRender?: (row: Row) => any;
-  options: any;
+  options?: any;
 }
 export type DisplaySchema<T> = {
   [key in keyof T]: DisplayField;
@@ -35,6 +35,11 @@ interface Props {
     show: DisplaySchema<any>;
     edit?: SchemaDefinition<any>;
   };
+  callBacks?: {
+    new?: (result: any) => void;
+    update?: (result: any) => void;
+    delete?: (result: any) => void;
+  };
 }
 
 const Index: React.FC<Props> = ({
@@ -42,7 +47,8 @@ const Index: React.FC<Props> = ({
   match,
   name,
   components = {},
-  schemaDefinition
+  schemaDefinition,
+  callBacks
 }) => {
   return (
     <div>
@@ -55,6 +61,7 @@ const Index: React.FC<Props> = ({
               dispatcher,
               name,
               schemaDefinition: schemaDefinition.list,
+              callBacks,
               ...props
             })
           ) : (
@@ -62,6 +69,7 @@ const Index: React.FC<Props> = ({
               dispatcher={dispatcher}
               name={name}
               schemaDefinition={schemaDefinition.list}
+              callBacks={callBacks}
               {...props}
             />
           );
@@ -77,6 +85,7 @@ const Index: React.FC<Props> = ({
                 dispatcher,
                 name,
                 schemaDefinition: schemaDefinition.new,
+                callBacks,
                 ...props
               })
             ) : (
@@ -84,6 +93,7 @@ const Index: React.FC<Props> = ({
                 dispatcher={dispatcher}
                 name={name}
                 schemaDefinition={schemaDefinition.new}
+                callBacks={callBacks}
                 {...props}
               />
             );
@@ -99,6 +109,7 @@ const Index: React.FC<Props> = ({
               dispatcher,
               name,
               schemaDefinition: schemaDefinition.show,
+              callBacks,
               ...props
             })
           ) : (
@@ -106,6 +117,7 @@ const Index: React.FC<Props> = ({
               dispatcher={dispatcher}
               name={name}
               schemaDefinition={schemaDefinition.show}
+              callBacks={callBacks}
               {...props}
             />
           );
@@ -121,6 +133,7 @@ const Index: React.FC<Props> = ({
                 dispatcher,
                 name,
                 schemaDefinition: schemaDefinition.edit,
+                callBacks,
                 ...props
               })
             ) : (
@@ -128,6 +141,7 @@ const Index: React.FC<Props> = ({
                 dispatcher={dispatcher}
                 name={name}
                 schemaDefinition={schemaDefinition.edit}
+                callBacks={callBacks}
                 {...props}
               />
             );

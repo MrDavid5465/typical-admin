@@ -8,11 +8,22 @@ interface Props {
   history: any;
   id: any;
   name: Name;
+  callBacks?: any;
 }
 
-const Delete: React.FC<Props> = ({ dispatcher, match, history, id, name }) => {
+const Delete: React.FC<Props> = ({
+  dispatcher,
+  match,
+  history,
+  id,
+  name,
+  callBacks
+}) => {
   const [removeItem] = useMutation(dispatcher.delete, {
-    onCompleted: () => history.push(match.url.replace(`/${id}/show`, "")),
+    onCompleted: data => {
+      history.push(match.url.replace(`/${id}/show`, ""));
+      callBacks.delete && callBacks.delete(data[`remove${name.singular}`]);
+    },
     refetchQueries: [{ query: dispatcher.list }]
   });
 
