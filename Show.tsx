@@ -9,6 +9,7 @@ interface Props {
   match: any;
   name: Name;
   schemaDefinition: any;
+  callBacks?: any;
 }
 
 const Show: React.FC<Props> = ({
@@ -16,7 +17,8 @@ const Show: React.FC<Props> = ({
   history,
   match,
   name,
-  schemaDefinition
+  schemaDefinition,
+  callBacks
 }) => {
   const id = match.params.id;
   const queryName = `get${name.singular}`;
@@ -56,6 +58,7 @@ const Show: React.FC<Props> = ({
           name={name}
           match={match}
           dispatcher={dispatcher}
+          callBacks={callBacks}
         />
       )}
       <hr />
