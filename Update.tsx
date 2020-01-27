@@ -23,7 +23,7 @@ const Update: React.FC<Props> = ({
   const id = match.params.id;
   const queryName = `get${name.singular}`;
   const [isValid, setIsValid] = useState(false);
-  const { data, error, loading } = useQuery(dispatcher.get, {
+  const { data, error, loading } = useQuery(dispatcher.show, {
     variables: { id }
   });
   const initialValues = !loading && !error && data[queryName];
