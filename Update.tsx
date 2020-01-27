@@ -1,15 +1,16 @@
 import React, { createRef, useState } from "react";
 import { useMutation, useQuery, Form } from "./lib";
-import { Name } from "./";
+import { Name, IDispatcher, ITACallBacks } from "./";
 import Links from "./Links";
+import { SchemaDefinition } from "@octant/per-form";
 
 interface Props {
-  dispatcher: any;
+  dispatcher: IDispatcher;
   history: any;
   match: any;
   name: Name;
-  schemaDefinition?: any;
-  callBacks?: any;
+  schemaDefinition?: SchemaDefinition<any>;
+  callBacks?: ITACallBacks;
 }
 
 const Update: React.FC<Props> = ({
@@ -31,7 +32,7 @@ const Update: React.FC<Props> = ({
   const [updateItem] = useMutation(dispatcher.edit, {
     onCompleted: data => {
       history.push(match.url.replace("edit", "show"));
-      callBacks.edit && callBacks.edit(data[queryName]);
+      callBacks && callBacks.edit && callBacks.edit(data[queryName]);
     },
     refetchQueries: [
       { query: dispatcher.show, variables: { id } },

@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "./lib";
 import Links from "./Links";
 import { useQuery } from "./lib";
-import { Name } from "./";
+import { Name, IDispatcher, ITACallBacks, DisplaySchema } from "./";
 interface Props {
-  dispatcher: any;
+  dispatcher: IDispatcher;
   match: any;
   history: any;
   name: Name;
-  schemaDefinition: any;
-  callBacks?: any;
+  schemaDefinition: DisplaySchema<any>;
+  callBacks?: ITACallBacks;
 }
 
 const List: React.FC<Props> = ({

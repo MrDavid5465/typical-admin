@@ -1,18 +1,18 @@
 import React, { createRef, useState } from "react";
 import { useMutation } from "./lib";
-import { Name } from "./";
+import { Name, IDispatcher, ITACallBacks } from "./";
 
 import Links from "./Links";
 import { SchemaDefinition } from "./lib";
 import Form from "./lib/templates/Form";
 
 interface Props {
-  dispatcher: any;
+  dispatcher: IDispatcher;
   match: any;
   history: any;
   name: Name;
   schemaDefinition?: SchemaDefinition<any>;
-  callBacks?: any;
+  callBacks?: ITACallBacks;
 }
 
 const New: React.FC<Props> = ({
@@ -30,7 +30,7 @@ const New: React.FC<Props> = ({
       history.push(
         match.url.replace("new", `${data[`add${name.singular}`].id}/show`)
       );
-      callBacks.new && callBacks.new([`add${name.singular}`]);
+      callBacks && callBacks.new && callBacks.new([`add${name.singular}`]);
     },
     refetchQueries: [{ query: dispatcher.list }]
   });

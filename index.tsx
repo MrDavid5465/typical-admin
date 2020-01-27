@@ -24,22 +24,39 @@ export type DisplaySchema<T> = {
   [key in keyof T]: DisplayField;
 };
 
+export interface IDispatcher {
+  list: any;
+  new?: any;
+  show: any;
+  edit?: any;
+  delete?: any;
+}
+export interface ITASchema {
+  list: DisplaySchema<any>;
+  new?: SchemaDefinition<any>;
+  show: DisplaySchema<any>;
+  edit?: SchemaDefinition<any>;
+}
+
+export interface ITACallBacks {
+  new?: (result: any) => void;
+  edit?: (result: any) => void;
+  delete?: (result: any) => void;
+}
+export interface IComponents {
+  list?: any;
+  new?: any;
+  show?: any;
+  edit?: any;
+}
+
 interface Props {
-  dispatcher: { list: any; new?: any; show: any; edit?: any; delete?: any };
+  dispatcher: IDispatcher;
   match: any;
   name: any;
-  components?: { list?: any; new?: any; show?: any; edit?: any };
-  schemaDefinition: {
-    list: DisplaySchema<any>;
-    new?: SchemaDefinition<any>;
-    show: DisplaySchema<any>;
-    edit?: SchemaDefinition<any>;
-  };
-  callBacks?: {
-    new?: (result: any) => void;
-    update?: (result: any) => void;
-    delete?: (result: any) => void;
-  };
+  components?: IComponents;
+  schemaDefinition: ITASchema;
+  callBacks?: ITACallBacks;
 }
 
 const Index: React.FC<Props> = ({

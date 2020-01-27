@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "./lib";
-import { Name } from "./";
+import { Name, IDispatcher } from "./";
 interface Props {
   match: any;
   name: Name;
-  dispatcher: any;
+  dispatcher: IDispatcher;
 }
 const Links: React.FC<Props> = ({ match, name, dispatcher }) => {
   const urls = {
