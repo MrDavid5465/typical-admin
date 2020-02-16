@@ -36,7 +36,6 @@ const New: React.FC<Props> = ({
   });
 
   function handleCreate() {
-    console.log(newRef.current.isValid);
     newRef.current.isValid &&
       createItem({ variables: { values: newRef.current.submit() } });
   }

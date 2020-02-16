@@ -39,7 +39,6 @@ const Show: React.FC<Props> = ({
     <div>
       <h4>Showing {name.singular}</h4>
       {Object.entries(schemaDefinition).map(([k, v]: any) => {
-        console.log(schemaDefinition[k].label);
         return (
           <p key={k}>
             <strong>{v.label}</strong>:{" "}
