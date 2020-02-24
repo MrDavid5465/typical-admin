@@ -56,7 +56,7 @@ function SubForm<T>(
         padding: "1em",
         margin: "0.6em 0 ",
         borderRadius: "0.5em",
-        border: isValid ? "1px solid green" : "1px solid #CCC"
+        border: isValid ? "0.077em solid green" : "0.077em solid #CCC"
       }}
     >
       <FormWrapper
