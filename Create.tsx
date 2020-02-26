@@ -1,10 +1,10 @@
-import React, { createRef, useState } from "react";
-import { useMutation } from "./lib";
-import { Name, IDispatcher, ITACallBacks } from "./";
+import React, { createRef, useState } from 'react';
+import { useMutation } from './lib';
+import { Name, IDispatcher, ITACallBacks } from './';
 
-import Links from "./Links";
-import { SchemaDefinition } from "./lib";
-import Form from "./lib/templates/Form";
+import Links from './Links';
+import { SchemaDefinition } from './lib';
+import Form from './lib/templates/Form';
 
 interface Props {
   dispatcher: IDispatcher;
@@ -21,18 +21,18 @@ const New: React.FC<Props> = ({
   history,
   name,
   schemaDefinition,
-  callBacks
+  callBacks,
 }) => {
   const newRef: React.RefObject<any> = createRef();
   const [isValid, setIsValid] = useState(false);
   const [createItem] = useMutation(dispatcher.new, {
     onCompleted: data => {
       history.push(
-        match.url.replace("new", `${data[`add${name.singular}`].id}/show`)
+        match.url.replace('new', `${data[`add${name.singular}`].id}/show`)
       );
       callBacks && callBacks.new && callBacks.new([`add${name.singular}`]);
     },
-    refetchQueries: [{ query: dispatcher.list }]
+    refetchQueries: [{ query: dispatcher.list }],
   });
 
   function handleCreate() {
@@ -51,7 +51,7 @@ const New: React.FC<Props> = ({
       <h5>New {name.singular}</h5>
       <Form
         ref={newRef}
-        name={"create"}
+        name={'create'}
         form={schemaDefinition || {}}
         onChange={handleChange}
       />

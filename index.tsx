@@ -1,11 +1,11 @@
-import React from "react";
-import { Route } from "./lib";
+import React from 'react';
+import { Route } from './lib';
 
-import Update from "./Update";
-import List from "./List";
-import Create from "./Create";
-import Show from "./Show";
-import { SchemaDefinition } from "@octant/per-form";
+import Update from './Update';
+import List from './List';
+import Create from './Create';
+import Show from './Show';
+import { SchemaDefinition } from '@octant/per-form';
 
 export interface Name {
   singular: string;
@@ -65,7 +65,7 @@ const Index: React.FC<Props> = ({
   name,
   components = {},
   schemaDefinition,
-  callBacks
+  callBacks,
 }) => {
   return (
     <div>
@@ -79,7 +79,7 @@ const Index: React.FC<Props> = ({
               name,
               schemaDefinition: schemaDefinition.list,
               callBacks,
-              ...props
+              ...props,
             })
           ) : (
             <List
@@ -103,7 +103,7 @@ const Index: React.FC<Props> = ({
                 name,
                 schemaDefinition: schemaDefinition.new,
                 callBacks,
-                ...props
+                ...props,
               })
             ) : (
               <Create
@@ -127,7 +127,7 @@ const Index: React.FC<Props> = ({
               name,
               schemaDefinition: schemaDefinition.show,
               callBacks,
-              ...props
+              ...props,
             })
           ) : (
             <Show
@@ -151,7 +151,7 @@ const Index: React.FC<Props> = ({
                 name,
                 schemaDefinition: schemaDefinition.edit,
                 callBacks,
-                ...props
+                ...props,
               })
             ) : (
               <Update

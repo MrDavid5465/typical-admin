@@ -1,8 +1,8 @@
-import React, { createRef, useState } from "react";
-import { useMutation, useQuery, Form } from "./lib";
-import { Name, IDispatcher, ITACallBacks } from "./";
-import Links from "./Links";
-import { SchemaDefinition } from "@octant/per-form";
+import React, { createRef, useState } from 'react';
+import { useMutation, useQuery, Form } from './lib';
+import { Name, IDispatcher, ITACallBacks } from './';
+import Links from './Links';
+import { SchemaDefinition } from '@octant/per-form';
 
 interface Props {
   dispatcher: IDispatcher;
@@ -19,25 +19,25 @@ const Update: React.FC<Props> = ({
   match,
   name,
   schemaDefinition,
-  callBacks
+  callBacks,
 }) => {
   const id = match.params.id;
   const queryName = `get${name.singular}`;
   const [isValid, setIsValid] = useState(false);
   const { data, error, loading } = useQuery(dispatcher.show, {
-    variables: { id }
+    variables: { id },
   });
   const initialValues = !loading && !error && data[queryName];
 
   const [updateItem] = useMutation(dispatcher.edit, {
     onCompleted: data => {
-      history.push(match.url.replace("edit", "show"));
+      history.push(match.url.replace('edit', 'show'));
       callBacks && callBacks.edit && callBacks.edit(data[queryName]);
     },
     refetchQueries: [
       { query: dispatcher.show, variables: { id } },
-      { query: dispatcher.list }
-    ]
+      { query: dispatcher.list },
+    ],
   });
   const editRef: React.RefObject<any> = createRef();
   function handleReset() {
@@ -65,7 +65,7 @@ const Update: React.FC<Props> = ({
       <h4>Edit {name.singular}</h4>
       <Form
         ref={editRef}
-        name={"update"}
+        name={'update'}
         form={schemaDefinition || {}}
         initialValues={initialValues}
         onChange={handleChange}

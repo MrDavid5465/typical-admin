@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "./lib";
-import Links from "./Links";
-import { useQuery } from "./lib";
-import { Name, IDispatcher, ITACallBacks, DisplaySchema } from "./";
+import React from 'react';
+import { Link } from './lib';
+import Links from './Links';
+import { useQuery } from './lib';
+import { Name, IDispatcher, ITACallBacks, DisplaySchema } from './';
 interface Props {
   dispatcher: IDispatcher;
   match: any;
@@ -15,9 +15,8 @@ interface Props {
 const List: React.FC<Props> = ({
   dispatcher,
   match,
-  history,
   name,
-  schemaDefinition
+  schemaDefinition,
 }) => {
   const queryName = `get${name.plural}`;
   const { data: items, error, loading } = useQuery(dispatcher.list);
@@ -44,7 +43,7 @@ const List: React.FC<Props> = ({
           {items[queryName].map((item: any, i: number) => {
             return (
               <tr key={item.id || i}>
-                {Object.entries(schemaDefinition).map(([k, v]: any) => (
+                {Object.entries(schemaDefinition).map(([k]: any) => (
                   <td key={k}>
                     {item[k].onRender
                       ? item[k].onRender({ value: item[k], values: item })
@@ -55,10 +54,10 @@ const List: React.FC<Props> = ({
                   <Link
                     to={{
                       pathname: `${match.url}/${item.id}/show`,
-                      state: item
+                      state: item,
                     }}
                   >
-                    {" "}
+                    {' '}
                     Show
                   </Link>
                 </td>

@@ -1,6 +1,6 @@
-import React from "react";
-import { useMutation } from "./lib";
-import { Name, IDispatcher, ITACallBacks } from "./";
+import React from 'react';
+import { useMutation } from './lib';
+import { Name, IDispatcher, ITACallBacks } from './';
 
 interface Props {
   dispatcher: IDispatcher;
@@ -17,16 +17,16 @@ const Delete: React.FC<Props> = ({
   history,
   id,
   name,
-  callBacks
+  callBacks,
 }) => {
   const [removeItem] = useMutation(dispatcher.delete, {
     onCompleted: data => {
-      history.push(match.url.replace(`/${id}/show`, ""));
+      history.push(match.url.replace(`/${id}/show`, ''));
       callBacks &&
         callBacks.delete &&
         callBacks.delete(data[`remove${name.singular}`]);
     },
-    refetchQueries: [{ query: dispatcher.list }]
+    refetchQueries: [{ query: dispatcher.list }],
   });
 
   function handleSubmit() {

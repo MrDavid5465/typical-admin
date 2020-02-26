@@ -1,12 +1,12 @@
-import React, { useEffect, forwardRef, ReactElement, Ref } from "react";
+import React, { useEffect, forwardRef, ReactElement, Ref } from 'react';
 
-import Raw from "./Raw";
+import Raw from './Raw';
 import useForm, {
   FormWrapper,
   SchemaDefinition,
   IForm,
-  IConverters
-} from "@octant/per-form";
+  IConverters,
+} from '@octant/per-form';
 
 interface Props<T> {
   converters?: IConverters;
@@ -30,12 +30,12 @@ function SubForm<T>(
     schema,
     submit: submitForm,
     touched,
-    values
+    values,
   } = useForm({
     converters,
     name,
     passedValues: initialValues,
-    schema: form
+    schema: form,
   });
 
   useEffect(() => {
@@ -47,16 +47,16 @@ function SubForm<T>(
     isValid,
     reset: () => resetForm(),
     submit: () => submitForm(),
-    values
+    values,
   }));
 
   return (
     <div
       style={{
-        padding: "1em",
-        margin: "0.6em 0 ",
-        borderRadius: "0.5em",
-        border: isValid ? "0.077em solid green" : "0.077em solid #CCC"
+        padding: '1em',
+        margin: '0.6em 0 ',
+        borderRadius: '0.5em',
+        border: isValid ? '0.077em solid green' : '0.077em solid #CCC',
       }}
     >
       <FormWrapper
