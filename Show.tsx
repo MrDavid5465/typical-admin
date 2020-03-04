@@ -2,7 +2,13 @@ import React from 'react';
 import Links from './Links';
 import Delete from './Delete';
 import { useQuery } from './lib';
-import { Name, IDispatcher, ITACallBacks, DisplaySchema } from './';
+import {
+  Name,
+  IDispatcher,
+  ITACallBacks,
+  DisplaySchema,
+  IComponents,
+} from './';
 
 interface Props {
   dispatcher: IDispatcher;
@@ -11,6 +17,7 @@ interface Props {
   name: Name;
   schemaDefinition: DisplaySchema<any>;
   callBacks?: ITACallBacks;
+  components?: IComponents;
 }
 
 const Show: React.FC<Props> = ({
@@ -20,6 +27,7 @@ const Show: React.FC<Props> = ({
   name,
   schemaDefinition,
   callBacks,
+  components,
 }) => {
   const id = match.params.id;
   const queryName = `get${name.singular}`;
@@ -51,7 +59,16 @@ const Show: React.FC<Props> = ({
           </p>
         );
       })}
-      {dispatcher.delete && (
+      {dispatcher.delete && components?.delete ? (
+        React.createElement(components.delete, {
+          id,
+          name,
+          match,
+          history,
+          dispatcher,
+          callBacks,
+        })
+      ) : (
         <Delete
           history={history}
           id={id}
@@ -62,7 +79,15 @@ const Show: React.FC<Props> = ({
         />
       )}
       <hr />
-      <Links match={match} name={name} dispatcher={dispatcher} />
+      {components?.links ? (
+        React.createElement(components.links, {
+          match,
+          name,
+          dispatcher,
+        })
+      ) : (
+        <Links match={match} name={name} dispatcher={dispatcher} />
+      )}
     </div>
   );
 };

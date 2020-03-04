@@ -1,6 +1,6 @@
 import React, { createRef, useState } from 'react';
 import { useMutation } from './lib';
-import { Name, IDispatcher, ITACallBacks } from './';
+import { Name, IDispatcher, ITACallBacks, IComponents } from './';
 
 import Links from './Links';
 import { SchemaDefinition } from './lib';
@@ -13,6 +13,7 @@ interface Props {
   name: Name;
   schemaDefinition?: SchemaDefinition<any>;
   callBacks?: ITACallBacks;
+  components?: IComponents;
 }
 
 const New: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const New: React.FC<Props> = ({
   name,
   schemaDefinition,
   callBacks,
+  components,
 }) => {
   const newRef: React.RefObject<any> = createRef();
   const [isValid, setIsValid] = useState(false);
@@ -60,7 +62,15 @@ const New: React.FC<Props> = ({
         Submit
       </button>
       <hr />
-      <Links match={match} name={name} dispatcher={dispatcher} />
+      {components?.links ? (
+        React.createElement(components.links, {
+          match,
+          name,
+          dispatcher,
+        })
+      ) : (
+        <Links match={match} name={name} dispatcher={dispatcher} />
+      )}
     </div>
   );
 };

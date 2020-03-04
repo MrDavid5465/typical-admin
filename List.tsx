@@ -2,7 +2,13 @@ import React from 'react';
 import { Link } from './lib';
 import Links from './Links';
 import { useQuery } from './lib';
-import { Name, IDispatcher, ITACallBacks, DisplaySchema } from './';
+import {
+  Name,
+  IDispatcher,
+  ITACallBacks,
+  DisplaySchema,
+  IComponents,
+} from './';
 interface Props {
   dispatcher: IDispatcher;
   match: any;
@@ -10,6 +16,7 @@ interface Props {
   name: Name;
   schemaDefinition: DisplaySchema<any>;
   callBacks?: ITACallBacks;
+  components?: IComponents;
 }
 
 const List: React.FC<Props> = ({
@@ -17,6 +24,7 @@ const List: React.FC<Props> = ({
   match,
   name,
   schemaDefinition,
+  components,
 }) => {
   const queryName = `get${name.plural}`;
   const { data: items, error, loading } = useQuery(dispatcher.list);
@@ -67,7 +75,15 @@ const List: React.FC<Props> = ({
         </tbody>
       </table>
       <hr />
-      <Links match={match} name={name} dispatcher={dispatcher} />
+      {components?.links ? (
+        React.createElement(components.links, {
+          match,
+          name,
+          dispatcher,
+        })
+      ) : (
+        <Links match={match} name={name} dispatcher={dispatcher} />
+      )}
     </div>
   );
 };

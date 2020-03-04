@@ -1,6 +1,6 @@
 import React, { createRef, useState } from 'react';
 import { useMutation, useQuery, Form } from './lib';
-import { Name, IDispatcher, ITACallBacks } from './';
+import { Name, IDispatcher, ITACallBacks, IComponents } from './';
 import Links from './Links';
 import { SchemaDefinition } from '@octant/per-form';
 
@@ -11,6 +11,7 @@ interface Props {
   name: Name;
   schemaDefinition?: SchemaDefinition<any>;
   callBacks?: ITACallBacks;
+  components?: IComponents;
 }
 
 const Update: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const Update: React.FC<Props> = ({
   name,
   schemaDefinition,
   callBacks,
+  components,
 }) => {
   const id = match.params.id;
   const queryName = `get${name.singular}`;
@@ -75,7 +77,15 @@ const Update: React.FC<Props> = ({
         Submit
       </button>
       <hr />
-      <Links match={match} name={name} dispatcher={dispatcher} />
+      {components?.links ? (
+        React.createElement(components.links, {
+          match,
+          name,
+          dispatcher,
+        })
+      ) : (
+        <Links match={match} name={name} dispatcher={dispatcher} />
+      )}
     </div>
   );
 };

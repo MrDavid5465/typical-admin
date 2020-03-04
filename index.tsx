@@ -48,6 +48,8 @@ export interface IComponents {
   new?: any;
   show?: any;
   edit?: any;
+  delete?: any;
+  links?: any;
 }
 
 interface Props {
@@ -79,6 +81,7 @@ const Index: React.FC<Props> = ({
               name,
               schemaDefinition: schemaDefinition.list,
               callBacks,
+              components,
               ...props,
             })
           ) : (
@@ -87,6 +90,7 @@ const Index: React.FC<Props> = ({
               name={name}
               schemaDefinition={schemaDefinition.list}
               callBacks={callBacks}
+              components={components}
               {...props}
             />
           );
@@ -103,6 +107,7 @@ const Index: React.FC<Props> = ({
                 name,
                 schemaDefinition: schemaDefinition.new,
                 callBacks,
+                components,
                 ...props,
               })
             ) : (
@@ -111,6 +116,7 @@ const Index: React.FC<Props> = ({
                 name={name}
                 schemaDefinition={schemaDefinition.new}
                 callBacks={callBacks}
+                components={components}
                 {...props}
               />
             );
@@ -127,6 +133,7 @@ const Index: React.FC<Props> = ({
               name,
               schemaDefinition: schemaDefinition.show,
               callBacks,
+              components,
               ...props,
             })
           ) : (
@@ -135,6 +142,7 @@ const Index: React.FC<Props> = ({
               name={name}
               schemaDefinition={schemaDefinition.show}
               callBacks={callBacks}
+              components={components}
               {...props}
             />
           );
@@ -151,6 +159,7 @@ const Index: React.FC<Props> = ({
                 name,
                 schemaDefinition: schemaDefinition.edit,
                 callBacks,
+                components,
                 ...props,
               })
             ) : (
@@ -159,6 +168,7 @@ const Index: React.FC<Props> = ({
                 name={name}
                 schemaDefinition={schemaDefinition.edit}
                 callBacks={callBacks}
+                components={components}
                 {...props}
               />
             );
