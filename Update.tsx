@@ -3,6 +3,7 @@ import { useMutation, useQuery, Form } from './lib';
 import { Name, IDispatcher, ITACallBacks, IComponents } from './';
 import Links from './Links';
 import { SchemaDefinition } from '@octant/per-form';
+import Subscriber from './Subscriber';
 
 interface Props {
   dispatcher: IDispatcher;
@@ -26,7 +27,7 @@ const Update: React.FC<Props> = ({
   const id = match.params.id;
   const queryName = `get${name.singular}`;
   const [isValid, setIsValid] = useState(false);
-  const { data, error, loading } = useQuery(dispatcher.show, {
+  const { data, error, loading, refetch } = useQuery(dispatcher.show, {
     variables: { id },
   });
   const initialValues = !loading && !error && data[queryName];
@@ -64,6 +65,16 @@ const Update: React.FC<Props> = ({
 
   return (
     <div>
+      {(dispatcher.subscribe || dispatcher.subscribeToOne) && (
+        <Subscriber
+          document={dispatcher.subscribeToOne || dispatcher.subscribe}
+          options={{
+            variables:
+              (dispatcher.subscribeToOne !== undefined && { id }) || {},
+            onSubscriptionData: () => refetch(),
+          }}
+        />
+      )}
       <h4>Edit {name.singular}</h4>
       <Form
         ref={editRef}

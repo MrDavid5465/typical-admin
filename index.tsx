@@ -30,6 +30,8 @@ export interface IDispatcher {
   show: any;
   edit?: any;
   delete?: any;
+  subscribe?: any;
+  subscribeToOne?: any;
 }
 export interface ITASchema {
   list: DisplaySchema<any>;

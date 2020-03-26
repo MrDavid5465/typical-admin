@@ -9,6 +9,8 @@ import {
   DisplaySchema,
   IComponents,
 } from './';
+import { useSubscription } from '@apollo/react-hooks';
+import Subscriber from './Subscriber';
 interface Props {
   dispatcher: IDispatcher;
   match: any;
@@ -27,7 +29,7 @@ const List: React.FC<Props> = ({
   components,
 }) => {
   const queryName = `get${name.plural}`;
-  const { data: items, error, loading } = useQuery(dispatcher.list);
+  const { data: items, error, loading, refetch } = useQuery(dispatcher.list);
   if (error) {
     return <span>{`error: ${error}`}</span>;
   }
@@ -38,6 +40,14 @@ const List: React.FC<Props> = ({
 
   return (
     <div>
+      {dispatcher.subscribe && (
+        <Subscriber
+          document={dispatcher.subscribe}
+          options={{
+            onSubscriptionData: refetch,
+          }}
+        />
+      )}
       <h4>Listing </h4>
       <table>
         <thead>
