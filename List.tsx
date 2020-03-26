@@ -9,7 +9,6 @@ import {
   DisplaySchema,
   IComponents,
 } from './';
-import { useSubscription } from '@apollo/react-hooks';
 import Subscriber from './Subscriber';
 interface Props {
   dispatcher: IDispatcher;
