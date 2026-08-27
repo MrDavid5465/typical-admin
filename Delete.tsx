@@ -1,11 +1,10 @@
 import React from 'react';
-import { useMutation } from './lib';
+import { useMutation, useLocation, useNavigate } from './lib';
 import { Name, IDispatcher, ITACallBacks } from './';
+import { confirmAsync } from '../denim/components/ConfirmDialog';
 
 interface Props {
   dispatcher: IDispatcher;
-  match: any;
-  history: any;
   id: any;
   name: Name;
   callBacks?: ITACallBacks;
@@ -13,15 +12,15 @@ interface Props {
 
 const Delete: React.FC<Props> = ({
   dispatcher,
-  match,
-  history,
   id,
   name,
   callBacks,
 }) => {
+  const {pathname} =  useLocation();
+  const navigate = useNavigate();
   const [removeItem] = useMutation(dispatcher.delete, {
-    onCompleted: data => {
-      history.push(match.url.replace(`/${id}/show`, ''));
+    onCompleted: (data: any) => {
+      navigate(pathname.replace(`/${id}/show`, ''));
       callBacks &&
         callBacks.delete &&
         callBacks.delete(data[`remove${name.singular}`]);
@@ -29,9 +28,10 @@ const Delete: React.FC<Props> = ({
     refetchQueries: [{ query: dispatcher.list }],
   });
 
-  function handleSubmit() {
-    const response = window.confirm(
-      `Are you sure you'd like to delete this ${name.singular}?`
+  async function handleSubmit() {
+    const response = await confirmAsync(
+      `Are you sure you'd like to delete this ${name.singular}?`,
+      { danger: true },
     );
     response && removeItem({ variables: { id } });
   }

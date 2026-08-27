@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSubscription, SubscriptionHookOptions } from '@apollo/react-hooks';
+import { useSubscription } from '@apollo/client/react';
 import { DocumentNode } from 'graphql';
 
 interface Props {
   document: DocumentNode;
-  options: SubscriptionHookOptions;
+  options: { variables?: any; onSubscriptionData: () => void };
 }
 
 const Subscriber: React.FC<Props> = ({ document, options }) => {

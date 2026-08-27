@@ -1,4 +1,5 @@
 export { default as Form } from './templates/Form';
-export { useMutation, useQuery } from '@apollo/react-hooks';
-export { Link, Route, withRouter } from 'react-router-dom';
-export * from '@octant/per-form';
+export { useMutation, useQuery } from '@apollo/client/react';
+export { useNavigate, useLocation, useParams } from 'react-router'
+export { Link, Route, Routes } from 'react-router-dom';
+export * from '../../per-form';

@@ -1,5 +1,5 @@
 import React, { ReactElement, ChangeEvent } from 'react';
-import { IField, withConditionalRender } from '@octant/per-form';
+import { IField, withConditionalRender } from '../../../per-form';
 
 const errorStyle = {
   minHeight: '1.32em',

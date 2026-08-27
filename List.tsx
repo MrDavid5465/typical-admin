@@ -1,34 +1,33 @@
 import React from 'react';
 import { Link } from './lib';
 import Links from './Links';
-import { useQuery } from './lib';
+import { useQuery, useLocation } from './lib';
 import {
   Name,
   IDispatcher,
   ITACallBacks,
-  DisplaySchema,
+  ListSchema,
   IComponents,
 } from './';
 import Subscriber from './Subscriber';
 interface Props {
   dispatcher: IDispatcher;
-  match: any;
-  history: any;
+  // match?: any;
   name: Name;
-  schemaDefinition: DisplaySchema<any>;
+  schemaDefinition: ListSchema<any>;
   callBacks?: ITACallBacks;
   components?: IComponents;
 }
 
 const List: React.FC<Props> = ({
   dispatcher,
-  match,
   name,
   schemaDefinition,
   components,
 }) => {
+  const { pathname } = useLocation()
   const queryName = `get${name.plural}`;
-  const { data: items, error, loading, refetch } = useQuery(dispatcher.list);
+  const { data: items, error, loading, refetch } : { data?: any; error?: any; loading?: boolean; refetch?: () => void } = useQuery(dispatcher.list);
   if (error) {
     return <span>{`error: ${error}`}</span>;
   }
@@ -51,7 +50,7 @@ const List: React.FC<Props> = ({
       <table>
         <thead>
           <tr>
-            {Object.entries(schemaDefinition).map(([k, v]: any) => (
+            {Object.entries(schemaDefinition.columns).map(([k, v]: any) => (
               <th key={k}>{v.label}</th>
             ))}
           </tr>
@@ -60,7 +59,7 @@ const List: React.FC<Props> = ({
           {items[queryName].map((item: any, i: number) => {
             return (
               <tr key={item.id || i}>
-                {Object.entries(schemaDefinition).map(([k]: any) => (
+                {Object.entries(schemaDefinition.columns).map(([k]: any) => (
                   <td key={k}>
                     {item[k].onRender
                       ? item[k].onRender({ value: item[k], values: item })
@@ -69,10 +68,8 @@ const List: React.FC<Props> = ({
                 ))}
                 <td>
                   <Link
-                    to={{
-                      pathname: `${match.url}/${item.id}/show`,
-                      state: item,
-                    }}
+                    to={`${pathname}/${item.id}/show`}
+                    state={item}
                   >
                     {' '}
                     Show
@@ -86,12 +83,12 @@ const List: React.FC<Props> = ({
       <hr />
       {components?.links ? (
         React.createElement(components.links, {
-          match,
+          // match,
           name,
           dispatcher,
         })
       ) : (
-        <Links match={match} name={name} dispatcher={dispatcher} />
+        <Links name={name} dispatcher={dispatcher} />
       )}
     </div>
   );

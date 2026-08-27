@@ -1,5 +1,5 @@
 import React, { createRef, useState } from 'react';
-import { useMutation } from './lib';
+import { useMutation, useNavigate, useLocation } from './lib';
 import { Name, IDispatcher, ITACallBacks, IComponents } from './';
 
 import Links from './Links';
@@ -8,8 +8,6 @@ import Form from './lib/templates/Form';
 
 interface Props {
   dispatcher: IDispatcher;
-  match: any;
-  history: any;
   name: Name;
   schemaDefinition?: SchemaDefinition<any>;
   callBacks?: ITACallBacks;
@@ -18,19 +16,19 @@ interface Props {
 
 const New: React.FC<Props> = ({
   dispatcher,
-  match,
-  history,
   name,
   schemaDefinition,
   callBacks,
   components,
 }) => {
+  const {pathname} =  useLocation();
+  const navigate = useNavigate();
   const newRef: React.RefObject<any> = createRef();
   const [isValid, setIsValid] = useState(false);
   const [createItem] = useMutation(dispatcher.new, {
-    onCompleted: data => {
-      history.push(
-        match.url.replace('new', `${data[`add${name.singular}`].id}/show`)
+    onCompleted: (data: any) => {
+      navigate(
+        pathname.replace('new', `${data[`add${name.singular}`].id}/show`)
       );
       callBacks && callBacks.new && callBacks.new([`add${name.singular}`]);
     },
@@ -64,12 +62,11 @@ const New: React.FC<Props> = ({
       <hr />
       {components?.links ? (
         React.createElement(components.links, {
-          match,
           name,
           dispatcher,
         })
       ) : (
-        <Links match={match} name={name} dispatcher={dispatcher} />
+        <Links name={name} dispatcher={dispatcher} />
       )}
     </div>
   );

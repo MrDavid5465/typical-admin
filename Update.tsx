@@ -2,13 +2,13 @@ import React, { createRef, useState } from 'react';
 import { useMutation, useQuery, Form } from './lib';
 import { Name, IDispatcher, ITACallBacks, IComponents } from './';
 import Links from './Links';
-import { SchemaDefinition } from '@octant/per-form';
+import { SchemaDefinition } from '../per-form';
 import Subscriber from './Subscriber';
 
 interface Props {
   dispatcher: IDispatcher;
-  history: any;
-  match: any;
+  history?: any;
+  match?: any;
   name: Name;
   schemaDefinition?: SchemaDefinition<any>;
   callBacks?: ITACallBacks;
@@ -27,15 +27,15 @@ const Update: React.FC<Props> = ({
   const id = match.params.id;
   const queryName = `get${name.singular}`;
   const [isValid, setIsValid] = useState(false);
-  const { data, error, loading, refetch } = useQuery(dispatcher.show, {
+  const { data, error, loading, refetch } : { data?: any; error?: any; loading?: boolean; refetch?: () => void } = useQuery(dispatcher.show, {
     variables: { id },
   });
-  const initialValues = !loading && !error && data[queryName];
+  const initialValues = !loading && !error && data && data[queryName];
 
   const [updateItem] = useMutation(dispatcher.edit, {
-    onCompleted: data => {
+    onCompleted: (data: any) => {
       history.push(match.url.replace('edit', 'show'));
-      callBacks && callBacks.edit && callBacks.edit(data[queryName]);
+      callBacks?.edit?.(data && data[queryName]);
     },
     refetchQueries: [
       { query: dispatcher.show, variables: { id } },
@@ -95,7 +95,7 @@ const Update: React.FC<Props> = ({
           dispatcher,
         })
       ) : (
-        <Links match={match} name={name} dispatcher={dispatcher} />
+        <Links name={name} dispatcher={dispatcher} />
       )}
     </div>
   );

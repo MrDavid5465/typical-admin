@@ -1,7 +1,7 @@
 import React from 'react';
 import Links from './Links';
 import Delete from './Delete';
-import { useQuery } from './lib';
+import { useQuery, useParams } from './lib';
 import {
   Name,
   IDispatcher,
@@ -13,8 +13,6 @@ import Subscriber from './Subscriber';
 
 interface Props {
   dispatcher: IDispatcher;
-  history: any;
-  match: any;
   name: Name;
   schemaDefinition: DisplaySchema<any>;
   callBacks?: ITACallBacks;
@@ -23,16 +21,14 @@ interface Props {
 
 const Show: React.FC<Props> = ({
   dispatcher,
-  history,
-  match,
   name,
   schemaDefinition,
   callBacks,
   components,
 }) => {
-  const id = match.params.id;
+  const { id } = useParams();
   const queryName = `get${name.singular}`;
-  const { data, error, loading, refetch } = useQuery(dispatcher.show, {
+  const { data, error, loading, refetch } : { data?: any; error?: any; loading?: boolean; refetch?: () => void } = useQuery(dispatcher.show, {
     variables: { id },
   });
 
@@ -75,17 +71,13 @@ const Show: React.FC<Props> = ({
           React.createElement(components.delete, {
             id,
             name,
-            match,
-            history,
             dispatcher,
             callBacks,
           })
         ) : (
           <Delete
-            history={history}
             id={id}
             name={name}
-            match={match}
             dispatcher={dispatcher}
             callBacks={callBacks}
           />
@@ -93,12 +85,11 @@ const Show: React.FC<Props> = ({
       <hr />
       {components?.links ? (
         React.createElement(components.links, {
-          match,
           name,
           dispatcher,
         })
       ) : (
-        <Links match={match} name={name} dispatcher={dispatcher} />
+        <Links name={name} dispatcher={dispatcher} />
       )}
     </div>
   );
