@@ -22,6 +22,19 @@ backend, read typiql-rs's `.claude/skills/typiql-api`.
 
 ## Layout: clone the three libraries side by side
 
+Get them from:
+
+- https://github.com/MrDavid5465/typical-admin
+- https://github.com/MrDavid5465/typical-admin-fabric
+- https://github.com/MrDavid5465/per-form
+
+```sh
+cd your-app/src/lib
+git clone https://github.com/MrDavid5465/typical-admin
+git clone https://github.com/MrDavid5465/typical-admin-fabric
+git clone https://github.com/MrDavid5465/per-form
+```
+
 typical-admin, [typical-admin-fabric](../typical-admin-fabric) and
 [per-form](../per-form) import each other through relative paths
 (`../per-form`, `../typical-admin`, `../../../per-form`), so they must be
