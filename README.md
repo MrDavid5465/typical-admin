@@ -60,6 +60,7 @@ setup.
   schemaDefinition={schemaDefinition}
   components={{ /* optional per-slot overrides */ }}
   callBacks={{ /* optional new/edit/delete result callbacks */ }}
+  labels={{ /* optional display text, see below */ }}
 />
 ```
 
@@ -90,8 +91,22 @@ typiql generates exactly these names: for `struct Project` it generates
 `removeProject(id:)` and `projectChanged(id:)`. Its plural is the snake_case
 type name plus `s`/`es`/`ies` (`Category` -> `getCategories`,
 `Box` -> `getBoxes`, `Person` -> `getPersons`), so `name.plural` must be
-**that** stem, not the English plural. `name.singular`/`name.plural` are also
-printed as page headings ("Showing Project", "Listing Projects").
+**that** stem, not the English plural. Without `labels`,
+`name.singular`/`name.plural` are also printed as page headings ("Showing
+Project", "Listing Projects").
+
+### `labels`: display text apart from the GraphQL names
+
+`labels` (`labels.ts`) holds what people read. Passing it, even `{}`,
+switches to defaults that read like English: `{plural}`, `{singular}`, `New
+{singularLower}`, `Edit {singularLower}` ("Devices", "Device", "New device",
+"Edit device"); without it the old text stays, so existing screens don't
+change. Override any entry (`singular`, `plural`, `listHeading`,
+`showHeading`, `newHeading`, `editHeading`, `deleteTitle`, `deleteConfirm`,
+`deletePrompt`, `back`, `edit`, `add`), e.g. `labels={{ singular: 'Rig
+device', plural: 'Rig devices' }}` when the type name reads badly. Every slot
+receives `labels`; a custom slot fills them with
+`label(resolveLabels(name, labels), 'showHeading')`.
 
 ### `schemaDefinition`
 
@@ -107,7 +122,7 @@ interface ITASchema {
 ### Slot overrides
 
 Every slot, default or overridden, receives the same props:
-`{ dispatcher, name, schemaDefinition: <that slot's part>, callBacks, components }`.
+`{ dispatcher, name, schemaDefinition: <that slot's part>, callBacks, components, labels }`.
 `components` recognises `list`, `new`, `show`, `edit`, `delete` and `links`
 (the back/edit/add navigation row). A slot you don't name keeps its default,
 so a custom slot is best written by copying the default component it
@@ -266,4 +281,6 @@ typical-admin-fabric replaces:
   `onRender`, so column `onRender` is ignored.
 - `Links.tsx` reads `location.state.params.id` on show pages, which is
   normally undefined, and logs `location.state` to the console.
+- They print the legacy headings and ignore `labels` (typical-admin-fabric's
+  slots use it).
 
