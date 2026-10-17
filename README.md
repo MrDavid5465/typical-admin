@@ -232,6 +232,10 @@ event types it says it carries.
 
 ## Building your own styled variant
 
+This section covers a new **skin** on this React + GraphQL core. For a
+variant on a different platform, data layer, backend or schema format, see
+[BUILDING-A-VARIANT.md](BUILDING-A-VARIANT.md).
+
 typical-admin-fabric is one implementation; you can write another (a
 different component library, a different design) the same way:
 
